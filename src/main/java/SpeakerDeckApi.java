@@ -1,36 +1,33 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.IOException;
-
 public class SpeakerDeckApi {
     public boolean isWorking() {
         return true;
     }
 
     public SpeakerProfile fetch(String username) {
-        String displayName = fetchDisplayName(username);
-
-        return new SpeakerProfile(displayName, 8);
-    }
-
-    private String fetchDisplayName(String username) {
+        String displayName =  "Not Found";
+        int countOfTalks = 0;
         try {
-            String pageTitle = getTitleTagValueFromUsernameHomepage(username);
-            return extractDisplayNameFromTitleTagValue(pageTitle);
+            Document doc = Jsoup.connect("https://speakerdeck.com/" + username).get();
+            displayName = extractDisplayNameFromDocument(doc);
+            countOfTalks = extractCountOfTalksFromDocument(doc);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "Not Found";
+
+        return new SpeakerProfile(displayName, countOfTalks);
     }
 
-    private String getTitleTagValueFromUsernameHomepage(String username) throws IOException {
-        Document doc = Jsoup.connect("https://speakerdeck.com/" + username).get();
-        return doc.title();
-    }
+    private String extractDisplayNameFromDocument(Document doc) {
+        String pageTitle = doc.title();
 
-    private String extractDisplayNameFromTitleTagValue(String pageTitle) {
         // The tile tag contains: Wagner Voltz - Fusca (@wagnerfusca) on Speaker Deck
         return pageTitle.substring(0, pageTitle.indexOf('(')).trim();
+    }
+
+    private int extractCountOfTalksFromDocument(Document doc) {
+        return doc.select("a div.deck-preview").size();
     }
 }
