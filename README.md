@@ -1,3 +1,4 @@
+[![Java CI with Gradle](https://github.com/ByIvo/speaker-deck-api/actions/workflows/gradle.yml/badge.svg)](https://github.com/ByIvo/speaker-deck-api/actions/workflows/gradle.yml)
 # speaker-deck-api
 
 # What
