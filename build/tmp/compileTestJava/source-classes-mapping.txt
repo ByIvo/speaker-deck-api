@@ -1,2 +1,0 @@
-SpeakerDeckApiTest.java
- SpeakerDeckApiTest

@@ -1,2 +1,0 @@
-SpeakerDeckApi.java
- SpeakerDeckApi
