@@ -1,7 +1,7 @@
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
 
 public class SpeakerDeckApi {
     public boolean isWorking() {
@@ -16,9 +16,7 @@ public class SpeakerDeckApi {
 
     private String fetchDisplayName(String username) {
         try {
-            String body = getHTMLBodyContentFromUsernameProfile(username);
-
-            String pageTitle = getTitleTagValueFromBody(body);
+            String pageTitle = getTitleTagValueFromUsernameHomepage(username);
             return extractDisplayNameFromTitleTagValue(pageTitle);
         } catch (Exception e) {
             e.printStackTrace();
@@ -26,20 +24,9 @@ public class SpeakerDeckApi {
         return "Not Found";
     }
 
-    private String getHTMLBodyContentFromUsernameProfile(String username) throws java.io.IOException, InterruptedException {
-        HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest httpRequest = HttpRequest.newBuilder()
-                .uri(URI.create("https://speakerdeck.com/" + username))
-                .build();
-
-        return httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString()).body();
-    }
-
-    private String getTitleTagValueFromBody(String body) {
-        int start = body.indexOf("<title>") + "<title>".length();
-        int end = body.indexOf("</title>", start);
-
-       return body.substring(start, end);
+    private String getTitleTagValueFromUsernameHomepage(String username) throws IOException {
+        Document doc = Jsoup.connect("https://speakerdeck.com/" + username).get();
+        return doc.title();
     }
 
     private String extractDisplayNameFromTitleTagValue(String pageTitle) {
