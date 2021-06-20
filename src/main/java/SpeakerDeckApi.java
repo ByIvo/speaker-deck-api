@@ -2,9 +2,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 public class SpeakerDeckApi {
-    public boolean isWorking() {
-        return true;
-    }
 
     public SpeakerProfile fetch(String username) {
         String displayName =  "Not Found";

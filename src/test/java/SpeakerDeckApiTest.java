@@ -6,12 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class SpeakerDeckApiTest {
 
     @Test
-    public void shouldWork() {
-        boolean isWorking = new SpeakerDeckApi().isWorking();
-        Assertions.assertTrue(isWorking, "SpeakerDeckAPI is not working!");
-    }
-
-    @Test
     public void shouldFetchTheSpeakerProfile() {
         SpeakerProfile speakerProfile = new SpeakerDeckApi().fetch("wagnerfusca");
         Assertions.assertEquals("Wagner Voltz - Fusca", speakerProfile.getDisplayName(), "It got the wrong display name");
