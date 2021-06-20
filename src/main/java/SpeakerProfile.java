@@ -15,4 +15,12 @@ public class SpeakerProfile {
     public int getCountOfTalks() {
         return countOfTalks;
     }
+
+    @Override
+    public String toString() {
+        return "SpeakerProfile{" +
+                "displayName='" + displayName + '\'' +
+                ", countOfTalks=" + countOfTalks +
+                '}';
+    }
 }

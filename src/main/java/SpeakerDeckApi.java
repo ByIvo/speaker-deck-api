@@ -3,6 +3,12 @@ import org.jsoup.nodes.Document;
 
 public class SpeakerDeckApi {
 
+    public static void main(String[] args) {
+        String username = args[0];
+        SpeakerProfile speakerProfile = new SpeakerDeckApi().fetch(username);
+        System.out.println(speakerProfile);
+    }
+
     public SpeakerProfile fetch(String username) {
         String displayName =  "Not Found";
         int countOfTalks = 0;
